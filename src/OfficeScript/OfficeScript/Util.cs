@@ -44,5 +44,18 @@ namespace OfficeScript
                 return thisObject.GetType().GetProperty(name).GetValue(thisObject, null);
             }
         }
+
+
+
+        /// <summary>
+        /// Helper for Fill because .Net treat color as RGB, while Netoffice (Interop aswell) treats color as BGR
+        /// </summary>
+        public static string BGRtoRGB(string value)
+        {
+            string b = value.Substring(1, 2);
+            string g = value.Substring(3, 2);
+            string r = value.Substring(5, 2);
+            return "#" + r + g + b;
+        }
     }
 }
