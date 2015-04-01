@@ -8,11 +8,11 @@ Office Application scripting in node.js using [NetOffice](http://netoffice.codep
 PowerPoint Application automation. MS PowerPoint installation on the machine is required!
 
 ```javascript
-
+    var path = require('path');
     var pptApplication = require('officescript').report.application;
 
     //Create a new instance of PowerPoint an try to open Presentation
-    pptApplication.open('./Presentation01.pptx', function(err, presentation) {
+    pptApplication.open(path.join(__dirname, 'Presentation01.pptx'), function(err, presentation) {
         if(err) throw err;
         //use presentation object
         console.log('Presentation path:', presentation.attr({name:'Path'}, true));
