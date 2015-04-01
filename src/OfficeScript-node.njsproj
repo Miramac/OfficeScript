@@ -1,0 +1,166 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{035a0dd9-09aa-4330-9e47-9ce4204ee012}</ProjectGuid>
+    <ProjectHome>..\</ProjectHome>
+    <ProjectView>ShowAllFiles</ProjectView>
+    <StartupFile>test\sandbox.js</StartupFile>
+    <WorkingDirectory>.</WorkingDirectory>
+    <OutputPath>.</OutputPath>
+    <ProjectTypeGuids>{3AF33F2E-1136-4D97-BBB7-1795711AC8B8};{349c5851-65df-11da-9384-00065b846f21};{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}</ProjectTypeGuids>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">11.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+    <StartWebBrowser>False</StartWebBrowser>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
+  <ItemGroup>
+    <Content Include="package.json" />
+    <Compile Include="index.js" />
+    <Compile Include="test\mocha.test.report.js" />
+    <Compile Include="test\sandbox.js" />
+    <Compile Include="lib\report\application.js" />
+    <Compile Include="lib\report\index.js" />
+    <Content Include="src\OfficeScript\OfficeScript\bin\Debug\NetOffice.xml" />
+    <Content Include="src\OfficeScript\OfficeScript\bin\Debug\OfficeApi.xml" />
+    <Content Include="src\OfficeScript\OfficeScript\bin\Debug\PowerPointApi.xml" />
+    <Content Include="src\OfficeScript\OfficeScript\bin\Debug\VBIDEApi.xml" />
+    <Content Include="src\OfficeScript\OfficeScript\obj\Debug\OfficeScript.csproj.FileListAbsolute.txt" />
+    <Content Include="src\OfficeScript\packages\NetOffice.Core.1.6.0.0\lib\net20\NetOffice.xml" />
+    <Content Include="src\OfficeScript\packages\NetOffice.Core.1.6.0.0\lib\net20\OfficeApi.xml" />
+    <Content Include="src\OfficeScript\packages\NetOffice.Core.1.6.0.0\lib\net20\VBIDEApi.xml" />
+    <Content Include="src\OfficeScript\packages\NetOffice.Core.1.6.0.0\lib\net30\NetOffice.xml" />
+    <Content Include="src\OfficeScript\packages\NetOffice.Core.1.6.0.0\lib\net30\OfficeApi.xml" />
+    <Content Include="src\OfficeScript\packages\NetOffice.Core.1.6.0.0\lib\net30\VBIDEApi.xml" />
+    <Content Include="src\OfficeScript\packages\NetOffice.Core.1.6.0.0\lib\net35\NetOffice.xml" />
+    <Content Include="src\OfficeScript\packages\NetOffice.Core.1.6.0.0\lib\net35\OfficeApi.xml" />
+    <Content Include="src\OfficeScript\packages\NetOffice.Core.1.6.0.0\lib\net35\VBIDEApi.xml" />
+    <Content Include="src\OfficeScript\packages\NetOffice.Core.1.6.0.0\lib\net40\NetOffice.xml" />
+    <Content Include="src\OfficeScript\packages\NetOffice.Core.1.6.0.0\lib\net40\OfficeApi.xml" />
+    <Content Include="src\OfficeScript\packages\NetOffice.Core.1.6.0.0\lib\net40\VBIDEApi.xml" />
+    <Content Include="src\OfficeScript\packages\NetOffice.Core.1.6.0.0\lib\net45\NetOffice.xml" />
+    <Content Include="src\OfficeScript\packages\NetOffice.Core.1.6.0.0\lib\net45\OfficeApi.xml" />
+    <Content Include="src\OfficeScript\packages\NetOffice.Core.1.6.0.0\lib\net45\VBIDEApi.xml" />
+    <Content Include="src\OfficeScript\packages\NetOffice.Core.1.7.2.0\lib\net20\NetOffice.xml" />
+    <Content Include="src\OfficeScript\packages\NetOffice.Core.1.7.2.0\lib\net20\OfficeApi.xml" />
+    <Content Include="src\OfficeScript\packages\NetOffice.Core.1.7.2.0\lib\net20\VBIDEApi.xml" />
+    <Content Include="src\OfficeScript\packages\NetOffice.Core.1.7.2.0\lib\net30\NetOffice.xml" />
+    <Content Include="src\OfficeScript\packages\NetOffice.Core.1.7.2.0\lib\net30\OfficeApi.xml" />
+    <Content Include="src\OfficeScript\packages\NetOffice.Core.1.7.2.0\lib\net30\VBIDEApi.xml" />
+    <Content Include="src\OfficeScript\packages\NetOffice.Core.1.7.2.0\lib\net35\NetOffice.xml" />
+    <Content Include="src\OfficeScript\packages\NetOffice.Core.1.7.2.0\lib\net35\OfficeApi.xml" />
+    <Content Include="src\OfficeScript\packages\NetOffice.Core.1.7.2.0\lib\net35\VBIDEApi.xml" />
+    <Content Include="src\OfficeScript\packages\NetOffice.Core.1.7.2.0\lib\net40\NetOffice.xml" />
+    <Content Include="src\OfficeScript\packages\NetOffice.Core.1.7.2.0\lib\net40\OfficeApi.xml" />
+    <Content Include="src\OfficeScript\packages\NetOffice.Core.1.7.2.0\lib\net40\VBIDEApi.xml" />
+    <Content Include="src\OfficeScript\packages\NetOffice.Core.1.7.2.0\lib\net45\NetOffice.xml" />
+    <Content Include="src\OfficeScript\packages\NetOffice.Core.1.7.2.0\lib\net45\OfficeApi.xml" />
+    <Content Include="src\OfficeScript\packages\NetOffice.Core.1.7.2.0\lib\net45\VBIDEApi.xml" />
+    <Content Include="src\OfficeScript\packages\NetOffice.PowerPoint.1.6.0.0\lib\net20\PowerPointApi.xml" />
+    <Content Include="src\OfficeScript\packages\NetOffice.PowerPoint.1.6.0.0\lib\net30\PowerPointApi.xml" />
+    <Content Include="src\OfficeScript\packages\NetOffice.PowerPoint.1.6.0.0\lib\net35\PowerPointApi.xml" />
+    <Content Include="src\OfficeScript\packages\NetOffice.PowerPoint.1.6.0.0\lib\net40\PowerPointApi.xml" />
+    <Content Include="src\OfficeScript\packages\NetOffice.PowerPoint.1.6.0.0\lib\net45\PowerPointApi.xml" />
+    <Content Include="src\OfficeScript\packages\NetOffice.PowerPoint.1.7.2.0\lib\net20\PowerPointApi.xml" />
+    <Content Include="src\OfficeScript\packages\NetOffice.PowerPoint.1.7.2.0\lib\net30\PowerPointApi.xml" />
+    <Content Include="src\OfficeScript\packages\NetOffice.PowerPoint.1.7.2.0\lib\net35\PowerPointApi.xml" />
+    <Content Include="src\OfficeScript\packages\NetOffice.PowerPoint.1.7.2.0\lib\net40\PowerPointApi.xml" />
+    <Content Include="src\OfficeScript\packages\NetOffice.PowerPoint.1.7.2.0\lib\net45\PowerPointApi.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="lib" />
+    <Folder Include="lib\report" />
+    <Folder Include="src" />
+    <Folder Include="src\obj" />
+    <Folder Include="src\obj\Debug" />
+    <Folder Include="src\OfficeScript" />
+    <Folder Include="src\OfficeScript\OfficeScript" />
+    <Folder Include="src\OfficeScript\OfficeScript\bin" />
+    <Folder Include="src\OfficeScript\OfficeScript\bin\Debug" />
+    <Folder Include="src\OfficeScript\OfficeScript\bin\Release" />
+    <Folder Include="src\OfficeScript\OfficeScript\obj" />
+    <Folder Include="src\OfficeScript\OfficeScript\obj\Debug" />
+    <Folder Include="src\OfficeScript\OfficeScript\obj\Debug\TempPE" />
+    <Folder Include="src\OfficeScript\OfficeScript\Properties" />
+    <Folder Include="src\OfficeScript\OfficeScript\Report" />
+    <Folder Include="src\OfficeScript\packages" />
+    <Folder Include="src\OfficeScript\packages\NetOffice.Core.1.6.0.0" />
+    <Folder Include="src\OfficeScript\packages\NetOffice.Core.1.6.0.0\lib" />
+    <Folder Include="src\OfficeScript\packages\NetOffice.Core.1.6.0.0\lib\net20" />
+    <Folder Include="src\OfficeScript\packages\NetOffice.Core.1.6.0.0\lib\net30" />
+    <Folder Include="src\OfficeScript\packages\NetOffice.Core.1.6.0.0\lib\net35" />
+    <Folder Include="src\OfficeScript\packages\NetOffice.Core.1.6.0.0\lib\net40" />
+    <Folder Include="src\OfficeScript\packages\NetOffice.Core.1.6.0.0\lib\net45" />
+    <Folder Include="src\OfficeScript\packages\NetOffice.Core.1.6.0.0\tools" />
+    <Folder Include="src\OfficeScript\packages\NetOffice.Core.1.7.2.0" />
+    <Folder Include="src\OfficeScript\packages\NetOffice.Core.1.7.2.0\lib" />
+    <Folder Include="src\OfficeScript\packages\NetOffice.Core.1.7.2.0\lib\net20" />
+    <Folder Include="src\OfficeScript\packages\NetOffice.Core.1.7.2.0\lib\net30" />
+    <Folder Include="src\OfficeScript\packages\NetOffice.Core.1.7.2.0\lib\net35" />
+    <Folder Include="src\OfficeScript\packages\NetOffice.Core.1.7.2.0\lib\net40" />
+    <Folder Include="src\OfficeScript\packages\NetOffice.Core.1.7.2.0\lib\net45" />
+    <Folder Include="src\OfficeScript\packages\NetOffice.Core.1.7.2.0\tools" />
+    <Folder Include="src\OfficeScript\packages\NetOffice.PowerPoint.1.6.0.0" />
+    <Folder Include="src\OfficeScript\packages\NetOffice.PowerPoint.1.6.0.0\lib" />
+    <Folder Include="src\OfficeScript\packages\NetOffice.PowerPoint.1.6.0.0\lib\net20" />
+    <Folder Include="src\OfficeScript\packages\NetOffice.PowerPoint.1.6.0.0\lib\net30" />
+    <Folder Include="src\OfficeScript\packages\NetOffice.PowerPoint.1.6.0.0\lib\net35" />
+    <Folder Include="src\OfficeScript\packages\NetOffice.PowerPoint.1.6.0.0\lib\net40" />
+    <Folder Include="src\OfficeScript\packages\NetOffice.PowerPoint.1.6.0.0\lib\net45" />
+    <Folder Include="src\OfficeScript\packages\NetOffice.PowerPoint.1.6.0.0\tools" />
+    <Folder Include="src\OfficeScript\packages\NetOffice.PowerPoint.1.7.2.0" />
+    <Folder Include="src\OfficeScript\packages\NetOffice.PowerPoint.1.7.2.0\lib" />
+    <Folder Include="src\OfficeScript\packages\NetOffice.PowerPoint.1.7.2.0\lib\net20" />
+    <Folder Include="src\OfficeScript\packages\NetOffice.PowerPoint.1.7.2.0\lib\net30" />
+    <Folder Include="src\OfficeScript\packages\NetOffice.PowerPoint.1.7.2.0\lib\net35" />
+    <Folder Include="src\OfficeScript\packages\NetOffice.PowerPoint.1.7.2.0\lib\net40" />
+    <Folder Include="src\OfficeScript\packages\NetOffice.PowerPoint.1.7.2.0\lib\net45" />
+    <Folder Include="src\OfficeScript\packages\NetOffice.PowerPoint.1.7.2.0\tools" />
+    <Folder Include="test" />
+    <Folder Include="test\data" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <!--Do not delete the following Import Project.  While this appears to do nothing it is a marker for setting TypeScript properties before our import that depends on them.-->
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="False" />
+  <Import Project="$(VSToolsPath)\Node.js Tools\Microsoft.NodejsTools.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:48022/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>True</UseCustomServer>
+          <CustomServerUrl>http://localhost:1337</CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}" User="">
+        <WebProjectProperties>
+          <StartPageUrl>
+          </StartPageUrl>
+          <StartAction>CurrentPage</StartAction>
+          <AspNetDebugging>True</AspNetDebugging>
+          <SilverlightDebugging>False</SilverlightDebugging>
+          <NativeDebugging>False</NativeDebugging>
+          <SQLDebugging>False</SQLDebugging>
+          <ExternalProgram>
+          </ExternalProgram>
+          <StartExternalURL>
+          </StartExternalURL>
+          <StartCmdLineArguments>
+          </StartCmdLineArguments>
+          <StartWorkingDirectory>
+          </StartWorkingDirectory>
+          <EnableENC>False</EnableENC>
+          <AlwaysStartWebServerOnDebug>False</AlwaysStartWebServerOnDebug>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>
