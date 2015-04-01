@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Drawing;
+using NetOffice.OfficeApi.Enums;
 using PowerPoint = NetOffice.PowerPointApi;
 
 namespace OfficeScript.Report
@@ -36,11 +38,24 @@ namespace OfficeScript.Report
                     {
                         this.Remove();
                         return null;
+                    }),
+                duplicate = (Func<object, Task<object>>)(
+                    async (input) =>
+                    {
+                        return this.Duplicate();
                     })
             };
         }
 
-
+        /// <summary>
+        /// Duplicate this Shape
+        /// </summary>
+        /// <returns>Shape</returns>
+        private object Duplicate()
+        {
+             return new Shape(this.shape.Duplicate()[1]).Invoke();
+        }
+        
         /// <summary>
         /// Deletes the Shape
         /// </summary>
@@ -49,6 +64,8 @@ namespace OfficeScript.Report
             this.shape.Delete();
             this.shape.Dispose();
         }
+
+       
 
         #region Properties
 
@@ -149,6 +166,36 @@ namespace OfficeScript.Report
             }
         }
 
+        /// <summary>
+        /// Get or Set the Fill-Property for this element.
+        /// </summary>
+        public string Fill
+        {
+            get
+            {
+                string bgr = "#" + this.shape.Fill.ForeColor.RGB.ToString("x6");
+                return Util.BGRtoRGB(bgr);
+            }
+            set
+            {
+                this.shape.Fill.ForeColor.RGB = ColorTranslator.FromHtml(Util.BGRtoRGB(value)).ToArgb();
+            }
+        }
+
+        /// <summary>
+        /// Get or Set the Alt-Text for this element.
+        /// </summary>
+        public string AltText
+        {
+            get
+            {
+                return this.shape.AlternativeText;
+            }
+            set
+            {
+                this.shape.AlternativeText = value;
+            }
+        }
         #endregion Properties
     }
 }
