@@ -50,6 +50,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -63,7 +64,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Attr.cs" />
+    <Compile Include="Report\Paragraph.cs" />
+    <Compile Include="Util.cs" />
     <Compile Include="Report\Application.cs" />
     <Compile Include="Report\Shape.cs" />
     <Compile Include="Report\Slide.cs" />
