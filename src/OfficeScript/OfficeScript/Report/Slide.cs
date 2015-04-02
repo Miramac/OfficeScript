@@ -15,7 +15,6 @@ namespace OfficeScript.Report
 
         public Slide(PowerPoint.Slide slide)
         {
-            // TODO: Complete member initialization
             this.slide = slide;
         }
 
@@ -43,10 +42,10 @@ namespace OfficeScript.Report
                         this.Remove();
                         return null;
                     }),
-                copy = (Func<object, Task<object>>)(
+                duplicate = (Func<object, Task<object>>)(
                     async (input) =>
                     {
-                        return this.Copy();
+                        return this.Duplicate();
                     }),
                 shapes = (Func<object, Task<object>>)(
                     async (input) =>
@@ -89,9 +88,9 @@ namespace OfficeScript.Report
         }
 
         /// <summary>
-        /// Copy Slide, default position is Slide-Index + 1
+        /// Duplicate Slide, default position is Slide-Index + 1
         /// </summary>
-        private object Copy()
+        private object Duplicate()
         {
             return new Slide(this.slide.Duplicate()[1]).Invoke();
         }
@@ -109,7 +108,7 @@ namespace OfficeScript.Report
         /// </summary>
         private object AddTextbox(IDictionary<string, object> parameters)
         {
-            //[]TODO: Set Params
+            //[]Task: OFFSCRIPT-2
             var orientation = NetOffice.OfficeApi.Enums.MsoTextOrientation.msoTextOrientationHorizontal;
             float left = 0;
             float top =  0;

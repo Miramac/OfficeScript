@@ -76,8 +76,7 @@ describe('report', function(){
                         presentation.slides(null, function(err, slides) {
                             if(err) throw err;
                             assert.equal(slides[1].attr({name:'Pos'}, true), 2);
-                            slides[1].attr({name:'Pos', value:1}, true);
-                            assert.equal(slides[1].attr({name:'Pos'}, true), 1);
+                            assert.equal( slides[1].attr({name:'Pos', value:1}, true).attr({name:'Pos'}, true), 1);
                             presentation.close(null, done);
                         });
                     });
@@ -89,6 +88,20 @@ describe('report', function(){
                             presentation.slides(null, function(err, slides) {
                                 if(err) throw err;
                                 assert.equal(slides.length, 1);
+                                presentation.close(null, done);
+                            });
+                        });
+                    });
+                });
+                it('should be able to duplicate Slide1', function(done){
+                    app.open( path.join(testDataPath,testPPT01), function(err, presentation) {
+                        if(err) throw err;
+                        presentation.slides(null,true)[0].duplicate(null,function(err, slide) {
+                            if(err) throw err;
+                             assert.equal(slide.attr({name:'Pos'}, true), 2);
+                            presentation.slides(null, function(err, slides) {
+                                if(err) throw err;
+                                assert.equal(slides.length, 3);
                                 presentation.close(null, done);
                             });
                         });
@@ -140,6 +153,39 @@ describe('report', function(){
                             slides[0].shapes(null, function(err, shapes) {
                                 assert.equal(shapes[0].attr({name:'Name', value:'Test'} ,true).attr({name:'Name'}, true), 'Test');
                                 presentation.close(null, done);
+                            });     
+                        });
+                    });
+                });
+                it('should be able to duplicate shape1', function(done){
+                    app.open( path.join(testDataPath,testPPT01), function(err, presentation) {
+                        if(err) throw err;
+                        presentation.slides(null, function(err, slides) {
+                            if(err) throw err;
+                            slides[0].shapes(null, function(err, shapes) {
+                                var shapeCount = shapes.length;
+                                shapes[0].duplicate(null,function(err, shape) {
+                                    if(err) throw err;
+                                    assert.equal(slides[0].shapes(null, true).length, shapeCount + 1);
+                                    assert.equal(shape.attr({name:'Text'}, true), shapes[0].attr({name:'Text'}, true));
+                                    presentation.close(null, done);
+                                })
+                            });     
+                        });
+                    });
+                });
+                it('should be able to remove shape1', function(done){
+                    app.open( path.join(testDataPath,testPPT01), function(err, presentation) {
+                        if(err) throw err;
+                        presentation.slides(null, function(err, slides) {
+                            if(err) throw err;
+                            slides[0].shapes(null, function(err, shapes) {
+                                var shapeContent = shapes[0]
+                                shapes[0].remove(null,function(err) {
+                                    if(err) throw err;
+                                    assert.equal(slides[0].shapes(null, true).length, shapeCount - 1);
+                                    presentation.close(null, done);
+                                })
                             });     
                         });
                     });

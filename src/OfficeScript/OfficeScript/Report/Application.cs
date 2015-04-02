@@ -16,7 +16,7 @@ namespace OfficeScript.Report
 
         public PowerPointApplication()
         {
-            this.closeApplication = true;
+            this.closeApplication = true; //[]BUG: Es wird nicht geprüft ob App schon offen OFFSCRIPT-3
             this.application = new PowerPoint.Application();
             this.application.Visible = NetOffice.OfficeApi.Enums.MsoTriState.msoTrue;
         }
