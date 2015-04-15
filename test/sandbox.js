@@ -1,8 +1,11 @@
-var reportApp = require('../').report.application
+var Report = require('../').report
+//, reportApp = report.application
 ;
 
-reportApp(null, function(err, app) {
-     app.open(__dirname+'\\data\\Testpptx_02.pptx', function(err, presentation) {
+function d() {
+// reportApp(null, function(err, app) {
+    report = Report;
+     report.open(__dirname+'\\data\\Testpptx_02.pptx', function(err, presentation) {
         //use presentation object
         console.log('Presentation path:', presentation.attr({name:'Path'}, true));
         presentation.slides(null, function(err, slides) {
@@ -23,16 +26,20 @@ reportApp(null, function(err, app) {
                 console.log(shape1.paragraph({'start':5}, true).attr({name:'Text', value:"test"}, true));
 
                 // close presentation
-                // presentation.close(null, function(err){
-                    // if(err) throw err;
-                    // app.quit()
-                // });
+                 presentation.close(null, function(err){
+                    if(err) throw err;
+                    // report.quit(null,true);
+                    // var x = report.open(__dirname+'\\data\\Testpptx_02.pptx', true);
+                    // x.close(null, true);
+                    
+                    // report.quit()
+                });
             });
         });
     });
- })   
-    
-    
+ // })   
+    }
+    d();
     // app.open(__dirname+'\\data\\Testpptx_01.pptx', function(err, presentation) {
         // if(err) throw err;
         // console.log('ppt.name', presentation.attr({name:'Path'}, true ));

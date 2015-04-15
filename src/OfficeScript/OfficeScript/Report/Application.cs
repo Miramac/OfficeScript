@@ -10,14 +10,22 @@ namespace OfficeScript.Report
     class PowerPointApplication : IDisposable
     {
 
-        private PowerPoint.Application application;
-        private bool disposed;
+        private PowerPoint.Application application = null;
         private bool closeApplication;
+        private bool disposed;
 
         public PowerPointApplication()
         {
-            this.closeApplication = true; //[]BUG: Es wird nicht geprüft ob App schon offen OFFSCRIPT-3
-            this.application = new PowerPoint.Application();
+            this.application = PowerPoint.Application.GetActiveInstance();
+            if(this.application != null) 
+            {
+                this.closeApplication = false;
+            } else 
+            {
+                this.application = new PowerPoint.Application();
+                this.closeApplication = true;
+            }
+            
             this.application.Visible = NetOffice.OfficeApi.Enums.MsoTriState.msoTrue;
         }
 
