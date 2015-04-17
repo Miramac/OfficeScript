@@ -8,6 +8,7 @@ namespace OfficeScript
 {
     public static class Util
     {
+
         /// <summary>
         /// 
         /// </summary>
@@ -44,8 +45,6 @@ namespace OfficeScript
                 return thisObject.GetType().GetProperty(name).GetValue(thisObject, null);
             }
         }
-
-
 
         /// <summary>
         /// Helper for Fill because .Net treat color as RGB, while Netoffice (Interop aswell) treats color as BGR

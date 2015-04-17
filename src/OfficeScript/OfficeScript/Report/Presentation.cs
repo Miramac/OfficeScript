@@ -211,7 +211,6 @@ namespace OfficeScript.Report
         }
 
         
-
         #region Properties
 
         public string Name
