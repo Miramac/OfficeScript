@@ -84,12 +84,29 @@ namespace OfficeScript.Report
                 quit = (Func<object, Task<object>>)(
                     async (input) =>
                     {
+
+                        if (input != null)
+                        {
+                            if ((bool)input == true)
+                            {
+                                this.closeApplication = false;
+                            }
+                            else if ((bool)input == false)
+                            {
+                                this.closeApplication = false;
+                            }
+                        }
                         this.Dispose();
                         return null;
                     })
             };
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
         private object Open(string name)
         {
             //try to get the active PPT Instance

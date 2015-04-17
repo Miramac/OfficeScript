@@ -9,7 +9,7 @@ var assert = require('assert')
 
 describe('report', function(){
     this.timeout(15000);
-    after( function(done) {report.quit(null, done);} );
+   // after( function(done) {report.quit(null, done);} );
     describe('presentation', function(){
         describe('#open&close', function(){
             it('should open and close the file', function(done){
@@ -115,6 +115,22 @@ describe('report', function(){
                         if(err) throw err;
                         assert.equal(slide.shapes(null, true).length, shapeCount + 1);
                         presentation.close(null, done);  
+                    });
+                });
+            });
+            it('should be able to create a shape with top=100,left=100,height=200,width=200', function (done) {
+                report.open(path.join(testDataPath, testPPT01), function (err, presentation) {
+                    if (err) throw err;
+                    var slide = presentation.slides(null, true)[1];
+                    var shapeCount = slide.shapes(null, true).length;
+                    slide.addTextbox({top:100, left:100, height:200, width:200}, function (err, shape) {
+                        if (err) throw err;
+                        assert.equal(slide.shapes(null, true).length, shapeCount + 1);
+                        assert.equal(shape.attr({ name: "Top" }, true), 100);
+                        assert.equal(shape.attr({ name: "Left" }, true), 100);
+                        assert.equal(shape.attr({ name: "Height" }, true), 200);
+                        assert.equal(shape.attr({ name: "Width" }, true), 200);
+                        presentation.close(null, done);
                     });
                 });
             });

@@ -106,12 +106,80 @@ namespace OfficeScript.Report
         /// </summary>
         private object AddTextbox(IDictionary<string, object> parameters)
         {
-            //[]Task: OFFSCRIPT-2
+            object tmpObject;
+            float tmpFloat;
+
             var orientation = NetOffice.OfficeApi.Enums.MsoTextOrientation.msoTextOrientationHorizontal;
             float left = 0;
-            float top =  0;
-            float width = 100;
+            float top = 0;
             float height = 100;
+            float width = 100;
+
+
+
+            //Try to get Shape options: OFFSCRIPT-2
+            if (parameters.TryGetValue("left", out tmpObject))
+            {
+                if (float.TryParse(tmpObject.ToString(), out tmpFloat))
+                {
+                    left = tmpFloat;
+                }
+            }
+            if (parameters.TryGetValue("top", out tmpObject))
+            {
+                if (float.TryParse(tmpObject.ToString(), out tmpFloat))
+                {
+                    top = tmpFloat;
+                }
+            }
+            if (parameters.TryGetValue("height", out tmpObject))
+            {
+                if (float.TryParse(tmpObject.ToString(), out tmpFloat))
+                {
+                    height = tmpFloat;
+                }
+            }
+            if (parameters.TryGetValue("width", out tmpObject))
+            {
+                if (float.TryParse(tmpObject.ToString(), out tmpFloat))
+                {
+                    width = tmpFloat;
+                }
+            }
+
+            if (parameters.TryGetValue("texOrientation", out tmpObject))
+            {
+                switch (tmpObject.ToString().ToLower())
+                {
+                    case "horizontal":
+                        orientation = NetOffice.OfficeApi.Enums.MsoTextOrientation.msoTextOrientationHorizontal;
+                        break;
+                    case "downward":
+                        orientation = NetOffice.OfficeApi.Enums.MsoTextOrientation.msoTextOrientationDownward;
+                        break;
+                    case "rotatedfareast":
+                        orientation = NetOffice.OfficeApi.Enums.MsoTextOrientation.msoTextOrientationHorizontalRotatedFarEast;
+                        break;
+                    case "upward":
+                        orientation = NetOffice.OfficeApi.Enums.MsoTextOrientation.msoTextOrientationUpward;
+                        break;
+                    case "vertical":
+                        orientation = NetOffice.OfficeApi.Enums.MsoTextOrientation.msoTextOrientationVertical;
+                        break;
+                    case "verticalfareast":
+                        orientation = NetOffice.OfficeApi.Enums.MsoTextOrientation.msoTextOrientationVerticalFarEast;
+                        break;
+                    case "mixed": //what is mixed??
+                        orientation = NetOffice.OfficeApi.Enums.MsoTextOrientation.msoTextOrientationMixed;
+                        break;
+                    default:
+                        orientation = NetOffice.OfficeApi.Enums.MsoTextOrientation.msoTextOrientationHorizontal;
+                        break;
+
+                }
+            }
+
+
 
             return new Shape(this.slide.Shapes.AddTextbox(orientation, left, top, width, height)).Invoke();
         }
