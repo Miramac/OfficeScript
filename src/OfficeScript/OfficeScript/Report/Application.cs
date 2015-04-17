@@ -11,23 +11,9 @@ namespace OfficeScript.Report
     {
 
         private PowerPoint.Application application = null;
-        private bool closeApplication;
-        private bool disposed;
+        private bool closeApplication = false;
+        private bool disposed = false;
 
-        public PowerPointApplication()
-        {
-            this.application = PowerPoint.Application.GetActiveInstance();
-            if(this.application != null) 
-            {
-                this.closeApplication = false;
-            } else 
-            {
-                this.application = new PowerPoint.Application();
-                this.closeApplication = true;
-            }
-            
-            this.application.Visible = NetOffice.OfficeApi.Enums.MsoTriState.msoTrue;
-        }
 
         // Destruktor
         ~PowerPointApplication()
@@ -106,7 +92,20 @@ namespace OfficeScript.Report
 
         private object Open(string name)
         {
+            //try to get the active PPT Instance
+            this.application = PowerPoint.Application.GetActiveInstance();
+            if (this.application == null)
+            {
+                //start PPT if ther is no active instance
+                this.application = new PowerPoint.Application();
+                this.closeApplication = true;
+            }
+
+            this.application.Visible = NetOffice.OfficeApi.Enums.MsoTriState.msoTrue;
             return new Presentation(this.application.Presentations.Open(name)).Invoke();
         }
+
+
+
     }
 }

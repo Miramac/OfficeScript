@@ -51,15 +51,13 @@ namespace OfficeScript.Report
                     async (input) =>
                     {
                         return this.Shapes();
-                    }
-                ),
+                    }),
                 addTextbox = (Func<object, Task<object>>)(
                     async (input) =>
                     {
                         input = (input == null) ? new Dictionary<string,object>() :  input;
                         return this.AddTextbox((input as IDictionary<string, object>).ToDictionary(d => d.Key, d => d.Value));
-                    }
-                )
+                    })
             };
         }
 

@@ -1,7 +1,7 @@
 /*global describe,it,after*/
 var assert = require('assert')
 , path = require('path')
-, app = require('../').report
+, report = require('../').report
 , testPPT01 = 'Testpptx_01.pptx'
 , testDataPath = path.join(__dirname, 'data')
 ;
@@ -9,11 +9,11 @@ var assert = require('assert')
 
 describe('report', function(){
     this.timeout(15000);
-    after( function(done) {app.quit(null, done);} );
+    after( function(done) {report.quit(null, done);} );
     describe('presentation', function(){
         describe('#open&close', function(){
             it('should open and close the file', function(done){
-                app.open( path.join(testDataPath,testPPT01), function(err, presentation) {
+                report.open( path.join(testDataPath,testPPT01), function(err, presentation) {
                     if(err) throw err;
                     presentation.close(null, done);
                 });
@@ -21,7 +21,7 @@ describe('report', function(){
         });
         describe('#attr', function(){
             it('should get a name and path attribute from presentation', function(done){
-                app.open( path.join(testDataPath,testPPT01), function(err, presentation) {
+                report.open( path.join(testDataPath,testPPT01), function(err, presentation) {
                     if(err) throw err;
                     //get Path Sync
                     assert.equal(presentation.attr({name:'Path'}, true), testDataPath);
@@ -36,7 +36,7 @@ describe('report', function(){
         });
         describe('#slides', function(){
             it('should have 2 slides', function(done){
-                app.open( path.join(testDataPath,testPPT01), function(err, presentation) {
+                report.open( path.join(testDataPath,testPPT01), function(err, presentation) {
                     if(err) throw err;
                     presentation.slides(null, function(err, slides) {
                         if(err) throw err;
@@ -47,7 +47,7 @@ describe('report', function(){
             });
             
             it('should have the Attr Name', function(done){
-                app.open( path.join(testDataPath,testPPT01), function(err, presentation) {
+                report.open( path.join(testDataPath,testPPT01), function(err, presentation) {
                     if(err) throw err;
                     presentation.slides(null, function(err, slides) {
                         if(err) throw err;
@@ -58,7 +58,7 @@ describe('report', function(){
             });
             
             it('should have the Attr Pos', function(done){
-                app.open( path.join(testDataPath,testPPT01), function(err, presentation) {
+                report.open( path.join(testDataPath,testPPT01), function(err, presentation) {
                     if(err) throw err;
                     presentation.slides(null, function(err, slides) {
                         if(err) throw err;
@@ -70,7 +70,7 @@ describe('report', function(){
                 });
             });
             it('should be changeable the pos of Slide2', function(done){
-                app.open( path.join(testDataPath,testPPT01), function(err, presentation) {
+                report.open( path.join(testDataPath,testPPT01), function(err, presentation) {
                     if(err) throw err;
                     presentation.slides(null, function(err, slides) {
                         if(err) throw err;
@@ -81,7 +81,7 @@ describe('report', function(){
                 });
             });
             it('should be able to delete Slide2', function(done){
-                app.open( path.join(testDataPath,testPPT01), function(err, presentation) {
+                report.open( path.join(testDataPath,testPPT01), function(err, presentation) {
                     if(err) throw err;
                     presentation.slides(null,true)[1].remove(null,function(err) {
                         presentation.slides(null, function(err, slides) {
@@ -93,7 +93,7 @@ describe('report', function(){
                 });
             });
             it('should be able to duplicate Slide1', function(done){
-                app.open( path.join(testDataPath,testPPT01), function(err, presentation) {
+                report.open( path.join(testDataPath,testPPT01), function(err, presentation) {
                     if(err) throw err;
                     presentation.slides(null,true)[0].duplicate(null,function(err, slide) {
                         if(err) throw err;
@@ -107,7 +107,7 @@ describe('report', function(){
                 });
             });
             it('should be able to create a shape on slide1', function(done){
-                app.open( path.join(testDataPath,testPPT01), function(err, presentation) {
+                report.open( path.join(testDataPath,testPPT01), function(err, presentation) {
                     if(err) throw err;
                     var slide = presentation.slides(null,true)[1];
                     var shapeCount = slide.shapes(null, true).length;
@@ -121,7 +121,7 @@ describe('report', function(){
         });
         describe('#shapes', function(){
             it('should have 2 shapes on slide one', function(done){
-                app.open( path.join(testDataPath,testPPT01), function(err, presentation) {
+                report.open( path.join(testDataPath,testPPT01), function(err, presentation) {
                     if(err) throw err;
                     presentation.slides(null, function(err, slides) {
                         if(err) throw err;
@@ -133,7 +133,7 @@ describe('report', function(){
                 });
             });
             it('should have the Attr Name', function(done){
-                app.open( path.join(testDataPath,testPPT01), function(err, presentation) {
+                report.open( path.join(testDataPath,testPPT01), function(err, presentation) {
                     if(err) throw err;
                     presentation.slides(null, function(err, slides) {
                         if(err) throw err;
@@ -145,7 +145,7 @@ describe('report', function(){
                 });
             });
             it('should be changeable the Attribute Name', function(done){
-                app.open( path.join(testDataPath,testPPT01), function(err, presentation) {
+                report.open( path.join(testDataPath,testPPT01), function(err, presentation) {
                     if(err) throw err;
                     presentation.slides(null, function(err, slides) {
                         if(err) throw err;
@@ -157,7 +157,7 @@ describe('report', function(){
                 });
             });
             it('should be able to duplicate shape1', function(done){
-                app.open( path.join(testDataPath,testPPT01), function(err, presentation) {
+                report.open( path.join(testDataPath,testPPT01), function(err, presentation) {
                     if(err) throw err;
                     presentation.slides(null, function(err, slides) {
                         if(err) throw err;
@@ -174,7 +174,7 @@ describe('report', function(){
                 });
             });
             it('should be able to remove shape1', function(done){
-                app.open( path.join(testDataPath,testPPT01), function(err, presentation) {
+                report.open( path.join(testDataPath,testPPT01), function(err, presentation) {
                     if(err) throw err;
                     presentation.slides(null, function(err, slides) {
                         if(err) throw err;

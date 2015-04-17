@@ -228,7 +228,13 @@ namespace OfficeScript.Report
                 return this.presentation.Path;
             }
         }
-
+        public string FullName
+        {
+            get
+            {
+                return this.presentation.FullName;
+            }
+        }
         #endregion
     }
 }
