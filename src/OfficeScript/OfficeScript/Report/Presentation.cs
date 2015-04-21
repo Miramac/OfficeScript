@@ -13,7 +13,7 @@ namespace OfficeScript.Report
 
         private bool disposed;
         private PowerPoint.Presentation presentation;
-
+        private const OfficeScriptType officeScriptType = OfficeScriptType.Presentation;
         private bool closePresentation = true;
 
         public Presentation(PowerPoint.Presentation presentation)
@@ -90,7 +90,7 @@ namespace OfficeScript.Report
                 tags = (Func<object, Task<object>>)(
                     async (input) =>
                     {
-                        return new Tags(this.presentation).Invoke();
+                        return new PowerPointTags(this.presentation).Invoke();
                     }),
                 save = (Func<object, Task<object>>)(
                     async (input) =>
@@ -124,6 +124,12 @@ namespace OfficeScript.Report
                     async (input) =>
                     {
                         return this.Slides();
+                    }
+                ),
+                getType = (Func<object, Task<object>>)(
+                    async (input) =>
+                    {
+                        return officeScriptType;
                     }
                 )
             };

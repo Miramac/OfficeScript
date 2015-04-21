@@ -67,11 +67,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Report\Paragraph.cs" />
+    <Compile Include="OfficeScriptType.cs" />
     <Compile Include="Util.cs" />
     <Compile Include="Report\Application.cs" />
     <Compile Include="Report\Shape.cs" />
     <Compile Include="Report\Slide.cs" />
-    <Compile Include="Report\Tags.cs" />
+    <Compile Include="Report\PowerPointTags.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Report\Presentation.cs" />

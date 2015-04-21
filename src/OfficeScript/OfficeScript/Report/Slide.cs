@@ -11,6 +11,7 @@ namespace OfficeScript.Report
     class Slide
     {
         private PowerPoint.Slide slide;
+        private const OfficeScriptType officeScriptType = OfficeScriptType.Slide;
         private bool disposed;
 
         public Slide(PowerPoint.Slide slide)
@@ -34,7 +35,7 @@ namespace OfficeScript.Report
                 tags = (Func<object, Task<object>>)(
                     async (input) =>
                     {
-                        return new Tags(this.slide).Invoke();
+                        return new PowerPointTags(this.slide).Invoke();
                     }),
                 remove = (Func<object, Task<object>>)(
                     async (input) =>
@@ -57,7 +58,13 @@ namespace OfficeScript.Report
                     {
                         input = (input == null) ? new Dictionary<string,object>() :  input;
                         return this.AddTextbox((input as IDictionary<string, object>).ToDictionary(d => d.Key, d => d.Value));
-                    })
+                    }),
+                getType = (Func<object, Task<object>>)(
+                    async (input) =>
+                    {
+                        return officeScriptType;
+                    }
+                )
             };
         }
 

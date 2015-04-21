@@ -31,7 +31,7 @@ namespace OfficeScript.Report
                 tags = (Func<object, Task<object>>)(
                     async (input) =>
                     {
-                        return new Tags(this.shape).Invoke();
+                        return new PowerPointTags(this.shape).Invoke();
                     }),
                 remove = (Func<object, Task<object>>)(
                     async (input) =>

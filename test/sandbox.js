@@ -8,20 +8,25 @@ var presentation = report.open(__dirname+'\\data\\Testpptx_02.pptx', true);
 var slides = presentation.slides(null, true)
 var shapes = slides[1].shapes(null,true);
 
+console.log(presentation.getType(null, true));
+
 var $shape = new Shape(shapes[0]);
+
+console.log(shapes[0].tags(null, true).set({name:'Fu', value:'Bar'}, true).set({name:'Hans', value:'Dampf'}, true).getAll('FU',true));
+
 
 // console.log($shape.attr('Name' , 'Foo'));
 // console.log($shape.name('bar'));
 // console.log($shape.attr('Name'));
 
-slides[0].addTextbox({top:100, left:100, height:200, width:200}, function (err, shape) {
-    console.log(shape);
-    var s = Shape(shape);
-    s.text('Foo Bar');
-    console.log(shape.attr({ name: "Height" }, true))
-    console.log(s.left());
+// slides[0].addTextbox({top:100, left:100, height:200, width:200}, function (err, shape) {
+    // console.log(shape);
+    // var s = Shape(shape);
+    // s.text('Foo Bar');
+    // console.log(shape.attr({ name: "Height" }, true))
+    // console.log(s.left());
     
-})
+// })
 
 report.quit(null);
 
