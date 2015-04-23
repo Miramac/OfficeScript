@@ -12,11 +12,12 @@ namespace OfficeScript.Report
     {
         private PowerPoint.Slide slide;
         private const OfficeScriptType officeScriptType = OfficeScriptType.Slide;
-        private bool disposed;
+        private PowerPointTags tags;
 
         public Slide(PowerPoint.Slide slide)
         {
             this.slide = slide;
+            this.tags = new PowerPointTags(this.slide);
         }
 
         /// <summary>
@@ -30,12 +31,18 @@ namespace OfficeScript.Report
                 attr = (Func<object, Task<object>>)(
                     async (input) =>
                     {
+                        if (input is string)
+                        {
+                            var tmp = new Dictionary<string, object>();
+                            tmp.Add("name", input);
+                            input = tmp;
+                        }
                         return Util.Attr(this, (input as IDictionary<string, object>).ToDictionary(d => d.Key, d => d.Value), Invoke);
                     }),
                 tags = (Func<object, Task<object>>)(
                     async (input) =>
                     {
-                        return new PowerPointTags(this.slide).Invoke();
+                        return this.tags.Invoke();
                     }),
                 remove = (Func<object, Task<object>>)(
                     async (input) =>
@@ -51,7 +58,14 @@ namespace OfficeScript.Report
                 shapes = (Func<object, Task<object>>)(
                     async (input) =>
                     {
-                        return this.Shapes();
+                        if (input is string)
+                        {
+                            var tmp = new Dictionary<string, object>();
+                            tmp.Add("tag:ctobjectdata.id", input); //remove
+                            input = tmp;
+                        }
+                        input = (input == null) ? new Dictionary<string, object>() : input;
+                        return this.Shapes((input as IDictionary<string, object>).ToDictionary(d => d.Key, d => d.Value));
                     }),
                 addTextbox = (Func<object, Task<object>>)(
                     async (input) =>
@@ -69,20 +83,25 @@ namespace OfficeScript.Report
         }
 
         /// <summary>
-        /// Init slide Array
+        /// Init shape Array
         /// </summary>
         /// <returns></returns>
-        private object Shapes()
+        private object Shapes(IDictionary<string, object> filter)
         {
             List<object> shapes = new List<object>();
 
             foreach (PowerPoint.Shape pptShape in this.slide.Shapes)
             {
-                shapes.Add(new Shape(pptShape).Invoke());
+                var shape = new Shape(pptShape);
+                if (shape.TestFilter(filter))
+                {
+                    shapes.Add(shape.Invoke());
+                }
             }
 
             return shapes.ToArray();
         }
+
 
         /// <summary>
         /// Deletes the Slide
@@ -191,6 +210,61 @@ namespace OfficeScript.Report
             return new Shape(this.slide.Shapes.AddTextbox(orientation, left, top, width, height)).Invoke();
         }
 
+
+        internal bool TestFilter(IDictionary<string, object> filter)
+        {
+
+            //No filter, select all
+            if (filter.Keys.Count == 0)
+            {
+                return true;
+            }
+            string typeIdentifier;
+
+            typeIdentifier = "tag:";
+
+            foreach (string key in filter.Keys.Where(w => w.StartsWith(typeIdentifier)).ToArray())
+            {
+                string tagName = key.Substring(typeIdentifier.Length);
+                string tagValue = this.tags.Get(tagName);
+                string[] values = filter[key].ToString().Split(',');
+                for (int i = 0; i < values.Length; i++)
+                {
+                    string val = values[i].Trim();
+                    if (tagValue == val)
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            //Test Attr selectors
+            typeIdentifier = "attr:";
+            foreach (string key in filter.Keys.Where(w => w.StartsWith(typeIdentifier)).ToArray())
+            {
+                string attrName = key.Substring(typeIdentifier.Length);
+                string attrValue = this.GetType().GetProperty(attrName).GetValue(this, null).ToString();
+                string[] values = filter[key].ToString().Split(',');
+                for (int i = 0; i < values.Length; i++)
+                {
+                    string val = values[i].Trim();
+                    if (attrValue == val)
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        internal PowerPoint.Slide GetUnderlyingObject()
+        {
+            return this.slide;
+        }
 
         #region Properties
 

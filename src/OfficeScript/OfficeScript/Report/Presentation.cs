@@ -85,6 +85,12 @@ namespace OfficeScript.Report
                 attr = (Func<object, Task<object>>)(
                     async (input) =>
                     {
+                        if (input is string)
+                        {
+                            var tmp = new Dictionary<string, object>();
+                            tmp.Add("name", input);
+                            input = tmp;
+                        }
                         return Util.Attr(this, (input as IDictionary<string, object>).ToDictionary(d => d.Key, d => d.Value), Invoke);
                     }),
                 tags = (Func<object, Task<object>>)(
@@ -123,7 +129,14 @@ namespace OfficeScript.Report
                 slides = (Func<object, Task<object>>)(
                     async (input) =>
                     {
-                        return this.Slides();
+                        if (input is string)
+                        {
+                            var tmp = new Dictionary<string, object>();
+                            tmp.Add("tag:ctobjectdata.id", input); //remove
+                            input = tmp;
+                        }
+                        input = (input == null) ? new Dictionary<string, object>() : input;
+                        return this.Slides((input as IDictionary<string, object>).ToDictionary(d => d.Key, d => d.Value));
                     }
                 ),
                 getType = (Func<object, Task<object>>)(
@@ -142,7 +155,7 @@ namespace OfficeScript.Report
             this.presentation.Save();
         }
 
-        public void SaveAs(Dictionary<string, object> parameters)
+        private void SaveAs(Dictionary<string, object> parameters)
         {
             string name = (string)(parameters as Dictionary<string, object>)["name"];
             string type = null;
@@ -155,12 +168,12 @@ namespace OfficeScript.Report
         }
 
 
-        public void SaveAs(string fileName, string fileType)
+        private void SaveAs(string fileName, string fileType)
         {
             this.SaveAs(fileName, fileType, false);
         }
 
-        public void SaveAsCopy(Dictionary<string, object> parameters)
+        private void SaveAsCopy(Dictionary<string, object> parameters)
         {
             string name = (string)(parameters as Dictionary<string, object>)["name"];
             string type = null;
@@ -172,12 +185,12 @@ namespace OfficeScript.Report
             this.SaveAs(name, type, true);
         }
 
-        public void SaveAsCopy(string fileName, string fileType)
+        private void SaveAsCopy(string fileName, string fileType)
         {
             this.SaveAs(fileName, fileType, true);
         }
 
-        public void SaveAs(string fileName, string fileType, bool isCopy)
+        private void SaveAs(string fileName, string fileType, bool isCopy)
         {
             PowerPoint.Enums.PpSaveAsFileType pptFileType;
             switch (fileType.ToLower())
@@ -204,17 +217,24 @@ namespace OfficeScript.Report
         /// Init slide Array
         /// </summary>
         /// <returns></returns>
-        private object Slides()
+        private object Slides(IDictionary<string, object> filter)
         {
             List<object> slides = new List<object>();
 
             foreach (PowerPoint.Slide pptSlide in this.presentation.Slides)
             {
-                slides.Add(new Slide(pptSlide).Invoke());
+
+                var slide = new Slide(pptSlide);
+                if (slide.TestFilter(filter))
+                {
+                    slides.Add(slide.Invoke());
+                }
+
             }
 
             return slides.ToArray();
         }
+
 
         
         #region Properties

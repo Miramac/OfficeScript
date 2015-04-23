@@ -12,11 +12,13 @@ namespace OfficeScript.Report
     class Shape
     {
         private PowerPoint.Shape shape;
-        private bool disposed;
+        private const OfficeScriptType officeScriptType = OfficeScriptType.Shape;
+        private PowerPointTags tags;
 
         public Shape(PowerPoint.Shape shape)
         {
             this.shape = shape;
+            this.tags = new PowerPointTags(this.shape);
         }
 
         public object Invoke()
@@ -26,12 +28,18 @@ namespace OfficeScript.Report
                 attr = (Func<object, Task<object>>)(
                     async (input) =>
                     {
+                        if (input is string)
+                        {
+                            var tmp = new Dictionary<string, object>();
+                            tmp.Add("name", input);
+                            input = tmp;
+                        }
                         return Util.Attr(this, (input as IDictionary<string, object>).ToDictionary(d => d.Key, d => d.Value), Invoke);
                     }),
                 tags = (Func<object, Task<object>>)(
                     async (input) =>
                     {
-                        return new PowerPointTags(this.shape).Invoke();
+                        return this.tags.Invoke();
                     }),
                 remove = (Func<object, Task<object>>)(
                     async (input) =>
@@ -49,7 +57,13 @@ namespace OfficeScript.Report
                     {
                         input = (input == null) ? new Dictionary<string, object>() : input;
                         return new Paragraph(this.shape, (input as IDictionary<string, object>).ToDictionary(d => d.Key, d => d.Value)).Invoke(); ;
-                    })
+                    }),
+                getType = (Func<object, Task<object>>)(
+                    async (input) =>
+                    {
+                        return officeScriptType;
+                    }
+                )
 
             };
         }
@@ -72,7 +86,69 @@ namespace OfficeScript.Report
             this.shape.Dispose();
         }
 
-       
+
+        internal bool TestFilter(IDictionary<string, object> filter)
+        {
+
+            //No filter, select all
+            if (filter.Keys.Count == 0)
+            {
+                return true;
+            }
+            string typeIdentifier;
+
+            //Test Tag selectors
+            typeIdentifier = "tag:";
+            foreach (string key in filter.Keys.Where(w => w.StartsWith(typeIdentifier)).ToArray())
+            {
+                string tagName = key.Substring(typeIdentifier.Length);
+                string tagValue = this.tags.Get(tagName);
+                string[] values = filter[key].ToString().Split(',');
+                for (int i = 0; i < values.Length; i++)
+                {
+                    string val = values[i].Trim();
+                    if (tagValue == val)
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            //Test Attr selectors
+            typeIdentifier = "attr:";
+            foreach (string key in filter.Keys.Where(w => w.StartsWith(typeIdentifier)).ToArray())
+            {
+                string attrName = key.Substring(typeIdentifier.Length);
+                string attrValue = this.GetType().GetProperty(attrName).GetValue(this, null).ToString();
+                string[] values = filter[key].ToString().Split(',');
+                for (int i = 0; i < values.Length; i++)
+                {
+                    string val = values[i].Trim();
+                    if (attrValue == val)
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        internal PowerPoint.Shape GetUnderlyingObject()
+        {
+            return this.shape;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        internal PowerPointTags GetTags()
+        {
+            return new PowerPointTags(this.shape);
+        }
+
 
         #region Properties
 
@@ -203,6 +279,7 @@ namespace OfficeScript.Report
                 this.shape.AlternativeText = value;
             }
         }
+
         #endregion Properties
     }
 }
