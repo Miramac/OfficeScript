@@ -1,22 +1,68 @@
-var report = require('../').report
+var Q = require('q');
+var application = require('../').report
 
 var Shape = require('../lib/report/wrapper/shape');
+var Shapes = require('../lib/report/wrapper/shapes');
 //, reportApp = report.application
 
 
-var presentation = report.open(__dirname+'\\data\\Testpptx_02.pptx', true);
-var slides = presentation.slides(null, true)
-var shapes = slides[1].shapes(null,true);
+var presentation = application.open(__dirname+'\\data\\Testpptx_01.pptx', true);
+var slides = presentation.slides({"attr:Name":'Slide1,Slide2'}, true)
 
-console.log(presentation.getType(null, true));
+var i, j;
 
-var $shape = new Shape(shapes[0]);
+// for(i=0; i<slides.length; i++) {
+    // console.log("Slide:", slides[i].attr('Name', true))
+    // var shapes = slides[i].shapes({'attr:Name':'TextBox 3','tag:ctobjectdata.id':'shape1'},true);
+    // for(j=0; j<shapes.length; j++) {
+        // console.log("Shape:", shapes[j].attr('Name', true))
+    // }
+// }
 
-console.log(shapes[0].tags(null, true).set({name:'Fu', value:'Bar'}, true).set({name:'Hans', value:'Dampf'}, true).getAll('FU',true));
 
+var slides = presentation.slides({"attr:Name":'Slide2'}, function(err, slides){
+    var i, j;
+
+    for(i=0; i<slides.length; i++) {
+        console.log("Slide:", slides[i].attr('Name', true))
+        var shapes = slides[i].shapes({'attr:Name':'TextBox 3','tag:ctobjectdata.id':'shape1'},true);
+        for(j=0; j<shapes.length; j++) {
+            console.log("Shape:", shapes[j].attr('Name', true))
+        }
+    }
+})
+var slides = presentation.slides({"attr:Name":'Slide1'}, function(err, slides){
+    var i, j;
+
+    for(i=0; i<slides.length; i++) {
+        console.log("Slide:", slides[i].attr('Name', true))
+        var shapes = slides[i].shapes({'attr:Name':'TextBox 3','tag:ctobjectdata.id':'shape1'},true);
+        for(j=0; j<shapes.length; j++) {
+            console.log("Shape:", shapes[j].attr('Name', true))
+        }
+    }
+})
+
+
+
+// var chart = slides[1].shapes('chart1',true)[0]
+
+// Q.nfcall(chart.exportAs ,__dirname+'\\data\\Testpptx_01.png').done(function() {presentation.close(null,application.quit)})
+
+//console.log(presentation.getType(null, true));
+
+//var shapes = Shapes(shapes);
+
+//console.log(shapes.count());
+
+//console.log($shape.tag('Fu', 'Bar').tag('Fu'));
+
+//console.log(shapes[0].tags(null, true).set({name:'Fu', value:'Bar'}, true).set({name:'Hans', value:'Dampf'}, true).get('FU',true));
 
 // console.log($shape.attr('Name' , 'Foo'));
+
 // console.log($shape.name('bar'));
+
 // console.log($shape.attr('Name'));
 
 // slides[0].addTextbox({top:100, left:100, height:200, width:200}, function (err, shape) {
@@ -25,10 +71,9 @@ console.log(shapes[0].tags(null, true).set({name:'Fu', value:'Bar'}, true).set({
     // s.text('Foo Bar');
     // console.log(shape.attr({ name: "Height" }, true))
     // console.log(s.left());
-    
 // })
+//presentation.close(null,application.quit)
 
-report.quit(null);
 
 
 
