@@ -58,6 +58,18 @@ namespace OfficeScript.Report
                         input = (input == null) ? new Dictionary<string, object>() : input;
                         return new Paragraph(this.shape, (input as IDictionary<string, object>).ToDictionary(d => d.Key, d => d.Value)).Invoke(); ;
                     }),
+                exportAs = (Func<object, Task<object>>)(
+                    async (input) =>
+                    {
+                        if (input is string)
+                        {
+                            var tmp = new Dictionary<string, object>();
+                            tmp.Add("path", input);
+                            input = tmp;
+                        }
+                        ExportAs((input as IDictionary<string, object>).ToDictionary(d => d.Key, d => d.Value));
+                        return null;
+                    }),
                 getType = (Func<object, Task<object>>)(
                     async (input) =>
                     {
@@ -86,7 +98,58 @@ namespace OfficeScript.Report
             this.shape.Dispose();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="path"></param>
+        private void ExportAs(IDictionary<string, object> parameters)
+        {
+            string path = (string)parameters["path"];
+            string type = "png";
+            float heigth = 542;
+            float width = 722;
+            float scale = 2;
 
+            object tmp;
+
+            PowerPoint.Enums.PpShapeFormat ppShapeFormat = PowerPoint.Enums.PpShapeFormat.ppShapeFormatPNG;
+
+            if (parameters.TryGetValue("type", out tmp))
+            {
+                type = (string)tmp;
+            }
+            if (parameters.TryGetValue("heigth", out tmp))
+            {
+                heigth = (float)tmp;
+            }
+            if (parameters.TryGetValue("width", out tmp))
+            {
+                width = (float)tmp;
+            }
+            if (parameters.TryGetValue("scale", out tmp))
+            {
+                scale = (float)tmp;
+            }
+
+
+            switch (type.ToLower())
+            {
+                case "png":
+                    ppShapeFormat = PowerPoint.Enums.PpShapeFormat.ppShapeFormatPNG;
+                    break;
+                default:
+                    ppShapeFormat = PowerPoint.Enums.PpShapeFormat.ppShapeFormatPNG;
+                    break;
+            }
+            this.shape.Export(path, ppShapeFormat, width * scale, heigth * scale, PowerPoint.Enums.PpExportMode.ppRelativeToSlide);
+        }
+
+        /// <summary>
+        /// Test if the given Filter matches the shape. Filter can be Tags or Properties. 
+        /// eg: {"tag:mytag", "Some Value", "attr:Name", "Shape Name"}
+        /// </summary>
+        /// <param name="filter"></param>
+        /// <returns></returns>
         internal bool TestFilter(IDictionary<string, object> filter)
         {
 

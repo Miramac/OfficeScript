@@ -15,10 +15,11 @@ namespace OfficeScript.Report
         private PowerPoint.Presentation presentation;
         private const OfficeScriptType officeScriptType = OfficeScriptType.Presentation;
         private bool closePresentation = true;
-
+        private PowerPointTags tags;
         public Presentation(PowerPoint.Presentation presentation)
         {
             this.presentation = presentation;
+            this.tags = new PowerPointTags(this.presentation);
         }
 
         // Destruktor
@@ -96,7 +97,7 @@ namespace OfficeScript.Report
                 tags = (Func<object, Task<object>>)(
                     async (input) =>
                     {
-                        return new PowerPointTags(this.presentation).Invoke();
+                        return this.tags.Invoke();
                     }),
                 save = (Func<object, Task<object>>)(
                     async (input) =>
@@ -155,9 +156,9 @@ namespace OfficeScript.Report
             this.presentation.Save();
         }
 
-        private void SaveAs(Dictionary<string, object> parameters)
+        private void SaveAs(IDictionary<string, object> parameters)
         {
-            string name = (string)(parameters as Dictionary<string, object>)["name"];
+            string name = (string)(parameters as IDictionary<string, object>)["name"];
             string type = null;
             object tmp;
             if (parameters.TryGetValue("type", out tmp))
@@ -173,9 +174,9 @@ namespace OfficeScript.Report
             this.SaveAs(fileName, fileType, false);
         }
 
-        private void SaveAsCopy(Dictionary<string, object> parameters)
+        private void SaveAsCopy(IDictionary<string, object> parameters)
         {
-            string name = (string)(parameters as Dictionary<string, object>)["name"];
+            string name = (string)(parameters as IDictionary<string, object>)["name"];
             string type = null;
             object tmp;
             if (parameters.TryGetValue("type", out tmp))

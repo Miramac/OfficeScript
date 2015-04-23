@@ -9,7 +9,7 @@ var assert = require('assert')
 
 describe('report', function(){
     this.timeout(15000);
-   // after( function(done) {report.quit(null, done);} );
+    after( function(done) {report.quit(null, done);} );
     describe('presentation', function(){
         describe('#open&close', function(){
             it('should open and close the file', function(done){
@@ -25,6 +25,7 @@ describe('report', function(){
                     if(err) throw err;
                     //get Path Sync
                     assert.equal(presentation.attr({name:'Path'}, true), testDataPath);
+                    assert.equal(presentation.attr('Path', true), testDataPath);
                     //get name async
                     presentation.attr({name:'Name'}, function(err, data) {
                         if(err) throw err;
