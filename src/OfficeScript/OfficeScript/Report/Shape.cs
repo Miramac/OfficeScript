@@ -56,7 +56,13 @@ namespace OfficeScript.Report
                     async (input) =>
                     {
                         input = (input == null) ? new Dictionary<string, object>() : input;
-                        return new Paragraph(this.shape, (input as IDictionary<string, object>).ToDictionary(d => d.Key, d => d.Value)).Invoke(); ;
+                        return new Paragraph(this.shape, (input as IDictionary<string, object>).ToDictionary(d => d.Key, d => d.Value)).Invoke();
+                    }),
+                textReplace = (Func<object, Task<object>>)(
+                    async (input) =>
+                    {
+                        this.TextReplace((input as IDictionary<string, object>).ToDictionary(d => d.Key, d => d.Value));
+                        return null;
                     }),
                 exportAs = (Func<object, Task<object>>)(
                     async (input) =>
@@ -80,6 +86,8 @@ namespace OfficeScript.Report
             };
         }
 
+  
+
         /// <summary>
         /// Duplicate this Shape
         /// </summary>
@@ -98,6 +106,51 @@ namespace OfficeScript.Report
             this.shape.Dispose();
         }
 
+
+        private void TextReplace(Dictionary<string, object> parameters)
+        {
+            string find = null;
+            string replace = null;
+            object tmp;
+
+
+            if (parameters.TryGetValue("find", out tmp))
+            {
+                find = (string)tmp;
+            }
+            if (parameters.TryGetValue("replace", out tmp))
+            {
+                replace = (string)tmp;
+            }
+     
+            if(find != null && replace != null){
+                TextReplaxe(find, replace);
+            }
+        }
+
+        /// <summary>
+        /// Deletes the Shape
+        /// </summary>
+        private void TextReplaxe(string find, string replace)
+        {
+            if (this.shape.HasTextFrame == MsoTriState.msoTrue)
+            {
+                this.shape.TextFrame.TextRange.Replace(find, replace);
+            }
+            else if(this.shape.HasTable == MsoTriState.msoTrue)
+            {
+                foreach (PowerPoint.Row row in this.shape.Table.Rows)
+                {
+                    foreach (PowerPoint.Cell cell in row.Cells)
+                    {
+                        if (cell.Shape.HasTextFrame == MsoTriState.msoTrue)
+                        {
+                            cell.Shape.TextFrame.TextRange.Replace(find, replace);
+                        }
+                    }
+                }
+            }
+        }
         /// <summary>
         /// 
         /// </summary>

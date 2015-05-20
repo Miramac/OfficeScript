@@ -8,7 +8,7 @@ using PowerPoint = NetOffice.PowerPointApi;
 
 namespace OfficeScript.Report
 {
-    class Presentation : IDisposable
+    public class Presentation : IDisposable
     {
 
         private bool disposed;
@@ -159,7 +159,7 @@ namespace OfficeScript.Report
         private void SaveAs(IDictionary<string, object> parameters)
         {
             string name = (string)(parameters as IDictionary<string, object>)["name"];
-            string type = null;
+            string type = "pptx";
             object tmp;
             if (parameters.TryGetValue("type", out tmp))
             {
@@ -177,7 +177,7 @@ namespace OfficeScript.Report
         private void SaveAsCopy(IDictionary<string, object> parameters)
         {
             string name = (string)(parameters as IDictionary<string, object>)["name"];
-            string type = null;
+            string type = "pptx";
             object tmp;
             if (parameters.TryGetValue("type", out tmp))
             {
@@ -199,8 +199,14 @@ namespace OfficeScript.Report
                 case "pdf":
                     pptFileType = PowerPoint.Enums.PpSaveAsFileType.ppSaveAsPDF;
                     break;
-                default:
+                case "pptx":
+                    pptFileType = PowerPoint.Enums.PpSaveAsFileType.ppSaveAsOpenXMLPresentation;
+                    break;
+                case "ppt":
                     pptFileType = PowerPoint.Enums.PpSaveAsFileType.ppSaveAsPresentation;
+                    break;
+                default:
+                    pptFileType = PowerPoint.Enums.PpSaveAsFileType.ppSaveAsOpenXMLPresentation;
                     break;
             }
             if (isCopy)
@@ -236,7 +242,13 @@ namespace OfficeScript.Report
             return slides.ToArray();
         }
 
-
+        /// <summary>
+        /// 
+        /// </summary>
+        public PowerPoint.Presentation GetUnderlyingObject()
+        {
+            return this.presentation;
+        }
         
         #region Properties
 

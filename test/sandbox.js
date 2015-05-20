@@ -6,7 +6,7 @@ var Shapes = require('../lib/report/wrapper/shapes');
 //, reportApp = report.application
 
 
-var presentation = application.open(__dirname+'\\data\\Testpptx_01.pptx', true);
+var presentation = application.open(__dirname+'/data/Testpptx_01.pptx', true);
 var slides = presentation.slides({"attr:Name":'Slide1,Slide2'}, true)
 
 var i, j;

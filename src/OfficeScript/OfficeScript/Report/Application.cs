@@ -7,7 +7,7 @@ using PowerPoint = NetOffice.PowerPointApi;
 
 namespace OfficeScript.Report
 {
-    class PowerPointApplication : IDisposable
+    public class PowerPointApplication : IDisposable
     {
 
         private PowerPoint.Application application = null;
@@ -79,7 +79,7 @@ namespace OfficeScript.Report
                 open = (Func<object, Task<object>>)(
                     async (input) =>
                     {
-                        return this.Open((string)input);
+                        return this.Open((string)input).Invoke();
                     }),
                 quit = (Func<object, Task<object>>)(
                     async (input) =>
@@ -107,7 +107,7 @@ namespace OfficeScript.Report
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
-        private object Open(string name)
+        public Presentation Open(string name)
         {
             //try to get the active PPT Instance
             this.application = PowerPoint.Application.GetActiveInstance();
@@ -119,10 +119,17 @@ namespace OfficeScript.Report
             }
 
             this.application.Visible = NetOffice.OfficeApi.Enums.MsoTriState.msoTrue;
-            return new Presentation(this.application.Presentations.Open(name)).Invoke();
+            name = name.Replace('/', '\\');
+            return new Presentation(this.application.Presentations.Open(name));
         }
 
-
+        /// <summary>
+        /// 
+        /// </summary>
+        public PowerPoint.Application GetUnderlyingObject()
+        {
+            return this.application;
+        }
 
     }
 }
