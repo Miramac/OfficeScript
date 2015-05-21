@@ -106,7 +106,10 @@ namespace OfficeScript.Report
             this.shape.Dispose();
         }
 
-
+        /// <summary>
+        /// Search and replace
+        /// </summary>
+        /// <param name="parameters"></param>
         private void TextReplace(Dictionary<string, object> parameters)
         {
             string find = null;
@@ -124,20 +127,22 @@ namespace OfficeScript.Report
             }
      
             if(find != null && replace != null){
-                TextReplaxe(find, replace);
+                TextReplace(find, replace);
             }
         }
 
         /// <summary>
-        /// Deletes the Shape
+        /// Use PPT buildin search and replace function
         /// </summary>
-        private void TextReplaxe(string find, string replace)
+        private void TextReplace(string find, string replace)
         {
+            //for textboxes
             if (this.shape.HasTextFrame == MsoTriState.msoTrue)
             {
                 this.shape.TextFrame.TextRange.Replace(find, replace);
             }
-            else if(this.shape.HasTable == MsoTriState.msoTrue)
+            //for Tables
+            else if (this.shape.HasTable == MsoTriState.msoTrue)
             {
                 foreach (PowerPoint.Row row in this.shape.Table.Rows)
                 {
@@ -151,8 +156,9 @@ namespace OfficeScript.Report
                 }
             }
         }
+
         /// <summary>
-        /// 
+        /// Export shape as picture
         /// </summary>
         /// <param name="path"></param>
         private void ExportAs(IDictionary<string, object> parameters)
@@ -183,12 +189,23 @@ namespace OfficeScript.Report
             {
                 scale = (float)tmp;
             }
-
-
+            //couse
             switch (type.ToLower())
             {
                 case "png":
                     ppShapeFormat = PowerPoint.Enums.PpShapeFormat.ppShapeFormatPNG;
+                    break;
+                case "wmf":
+                    ppShapeFormat = PowerPoint.Enums.PpShapeFormat.ppShapeFormatWMF;
+                    break;
+                case "bmp":
+                    ppShapeFormat = PowerPoint.Enums.PpShapeFormat.ppShapeFormatBMP;
+                    break;
+                case "gif":
+                    ppShapeFormat = PowerPoint.Enums.PpShapeFormat.ppShapeFormatGIF;
+                    break;
+                case "jpg":
+                    ppShapeFormat = PowerPoint.Enums.PpShapeFormat.ppShapeFormatJPG;
                     break;
                 default:
                     ppShapeFormat = PowerPoint.Enums.PpShapeFormat.ppShapeFormatPNG;
