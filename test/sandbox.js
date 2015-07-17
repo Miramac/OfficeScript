@@ -1,6 +1,16 @@
 var Q = require('q');
 var application = require('../').report
+var Presentation = require('../lib/report/presentation')
 
+presentation = new Presentation(__dirname+'/data/Testpptx_01.pptx');
+var slides = presentation.slides({"attr:Pos":'1'});
+console.log('slides', slides.length);
+
+var shapes = presentation.shapes(null, slides);
+console.log('shapes', shapes.length);
+
+setTimeout(presentation.quit, 500);
+/*
 var Shape = require('../lib/report/wrapper/shape');
 var Shapes = require('../lib/report/wrapper/shapes');
 //, reportApp = report.application
@@ -43,7 +53,7 @@ var slides = presentation.slides({"attr:Name":'Slide1'}, function(err, slides){
     }
 })
 
-
+*/
 
 // var chart = slides[1].shapes('chart1',true)[0]
 

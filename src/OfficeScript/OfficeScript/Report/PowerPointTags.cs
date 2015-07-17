@@ -27,7 +27,7 @@ namespace OfficeScript.Report
         }
 
         /// <summary>
-        /// 
+        /// Retuns an object with async functions for node.js
         /// </summary>
         /// <returns></returns>
         public object Invoke()

@@ -76,7 +76,7 @@ namespace OfficeScript.Report
         #endregion Dispose
 
         /// <summary>
-        /// 
+        /// Retuns an object with async functions for node.js
         /// </summary>
         /// <returns></returns>
         public object Invoke()

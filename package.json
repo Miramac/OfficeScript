@@ -1,7 +1,7 @@
 {
   "name": "OfficeScript",
   "version": "0.0.0",
-  "description": "OfficeScript\r ============\r Office Application scripting in node.js using [NetOffice](http://netoffice.codeplex.com/) and edge.js.",
+  "description": "Office Application scripting in node.js using [NetOffice](http://netoffice.codeplex.com/) and edge.js.",
   "main": "index.js",
   "scripts": {
     "test": "./node_modules/.bin/mocha ./test/mocha.test.report.js"
